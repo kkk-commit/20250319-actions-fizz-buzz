@@ -24,7 +24,7 @@ jobs:
       - name: Cache NPM
         uses: actions/cache@v3
         with:
-          path: ${{ runner.os == 'Windows' && 'C:\\npm\\cache' || steps.npm-cache-dir.outputs.dir }}
+          path: ${{ runner.os == 'Windows' && 'C:\npm\cache' || steps.npm-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
@@ -55,7 +55,7 @@ jobs:
       - name: Cache NPM
         uses: actions/cache@v3
         with:
-          path: ${{ runner.os == 'Windows' && 'C:\\npm\\cache' || steps.npm-cache-dir.outputs.dir }}
+          path: ${{ runner.os == 'Windows' && 'C:\npm\cache' || steps.npm-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
                 ${{ runner.os }}-npm-
