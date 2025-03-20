@@ -17,14 +17,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Get NPM Cache Directory for linux and macos
-        if: runner.os != 'Windows'
         id: npm-cache-dir
         run: |
-          echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
+          if [ "$RUNNER_OS" != "Windows" ]; then
+            echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
+          else
+            echo "dir=$(npm config get cache)" >> $env:GITHUB_OUTPUT
+          fi
+        shell: bash
       - name: Cache NPM
         uses: actions/cache@v3
         with:
-          path: ${{ runner.os == 'Windows' && 'C:\npm\cache' || steps.npm-cache-dir.outputs.dir }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
@@ -48,14 +52,18 @@ jobs:
         with:
           node-version: 22.x
       - name: Get NPM Cache Directory for linux and macos
-        if: runner.os != 'Windows'
         id: npm-cache-dir
         run: |
-            echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT 
+          if [ "$RUNNER_OS" != "Windows" ]; then
+            echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
+          else
+            echo "dir=$(npm config get cache)" >> $env:GITHUB_OUTPUT
+          fi
+        shell: bash
       - name: Cache NPM
         uses: actions/cache@v3
         with:
-          path: ${{ runner.os == 'Windows' && 'C:\npm\cache' || steps.npm-cache-dir.outputs.dir }}
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
                 ${{ runner.os }}-npm-
